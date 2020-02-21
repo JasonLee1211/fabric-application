@@ -2,7 +2,7 @@
 這是一個在區塊鏈上建置簡單轉帳交易應用程式的教學，使用的區塊鏈架構是由 IBM 開發給 Linux 基金會的 [`Hyperledger Fabric`](https://www.hyperledger.org/projects/fabric)。這裡會詳細紀錄從事前準備到最終成品的過程，提供初學的人手把手的教學，如果對區塊鏈技術的開發有興趣或是想了解關於區塊鏈在證券、法規方面的同學，歡迎參加我們成大區塊鏈研究社！<br>
 <p align="center">⚠️  注意： ⚠️</p>
 
-`Hyperledger Composer` 已經被淘汰了，此教學只供基礎知識教學，後續開發建議使用 `Hyperledger Fabric 1.4 版以上` ⚠️
+`Hyperledger Composer` 已經被淘汰了，此教學只供基礎知識教學，後續開發建議使用 `Hyperledger Fabric 1.4 版以上` 
 <p align="center">
 <a href ="https://www.hyperledger.org/projects/fabric"><img src="https://img.shields.io/badge/hyperledger%20fabric-v1.2-brightgreen.svg"></a>
 <a href ="https://hyperledger.github.io/composer/latest/"><img src="https://img.shields.io/badge/hyperledger%20composer-v0.20.9-brightgreen.svg"></a>
@@ -22,67 +22,63 @@
 ## 執行 
 **如果你的環境還沒有安裝好的話，可以參考[安裝步驟](install.md)。**<br>
 
-1. 你會利用一些腳本來控制你的 runtime，如果你是按照教學的步驟安裝的話。當你第一次執行 runtime 時，你會需要跑啟動腳本並產生出一張 PeerAdmin 的卡片。<br><br>
+1. 你會利用一些腳本來控制你的 runtime，如果你是按照教學的步驟安裝的話。當你第一次執行 runtime 時，你會需要跑啟動腳本並產生出一張 PeerAdmin 的卡片。<br>
 
    ```bash
    cd ~/fabric-dev-servers
    export FABRIC_VERSION=hlfv12 #有關指定版本的部分請看安裝教學(install.md)
    ./startFabric.sh #啟動Fabric
    ```
-   備註：你可以利用 `./stopFabric.sh` 停止 runtime，或 `./startFabric.sh` 來重新啟動它。<br><br><br>
+   - 你可以利用 `./stopFabric.sh` 停止 runtime，或 `./startFabric.sh` 來重新啟動它。
+   - `startFabric.sh` 最終會執行 ~/fabric-tools/fabric-scripts/hlfv12/startFabric.sh，裡面有如下一行內容：
 
-   `startFabric.sh` 最終會執行 ~/fabric-tools/fabric-scripts/hlfv12/startFabric.sh，裡面有如下一行內容：<br><br>
+      ```bash
+      ARCH=$ARCH docker-compose -f "${DOCKER_FILE}" up -d
+      ```
+   - 打開 `~/fabric-tools/fabric-scripts/hlfv11/composer/docker-compose.yml` 我們可以看到有如下四個Docker 應用的配置：
+      * `ca.org1.example.com` (CA Node)
+      * `orderer.example.com` (Orderer Node)
+      * `peer0.org1.example.com` (Peer Node)
+      * `couchdb` (Database)
 
-   ```bash
-   ARCH=$ARCH docker-compose -f "${DOCKER_FILE}" up -d
-   ```
-   <br>
-
-   打開 `~/fabric-tools/fabric-scripts/hlfv11/composer/docker-compose.yml` 我們可以看到有如下四個Docker 應用的配置：
-   * `ca.org1.example.com` (CA Node)
-   * `orderer.example.com` (Orderer Node)
-   * `peer0.org1.example.com` (Peer Node)
-   * `couchdb` (Database)
-
-   它們啟動成功後就代表 Fabric 區塊鏈網路的核心部分已經處於運行的狀態了。<br><br>
-   在 `startFabric.sh` 中，還有以下內容：<br><br>
+      它們啟動成功後就代表 Fabric 區塊鏈網路的核心部分已經處於運行的狀態了。<br><br>
+   - 在 `startFabric.sh` 中，還有以下內容：<br>
    
-   ```bash
-   docker exec peer0.org1.example.com peer channel create ……
-   docker exec -e …… peer0.org1.example.com peer channel join ……
-   ```
-   <br>
-   它們的作用是建立一個通道（Channel）並將剛啟動的節點 `peer0.org1.example.com` 加入到這個通道。
-   <br><br>
-   通道（Channel）是 Fabric 中的重要概念與設計，它是網路成員間通訊的私有的子網路；網路中會有多個通道同時存在；每個交易都在認證、授權後在某個通道裡執行；所有數據、交易、成員、通道信息都只對此通道的授權成員可見。<br><br><br>
+      ```bash
+      docker exec peer0.org1.example.com peer channel create ……
+      docker exec -e …… peer0.org1.example.com peer channel join ……
+      ```
 
-2. 生成並導入PeerAdmin Card：<br><br>
+      它們的作用是建立一個通道（Channel）並將剛啟動的節點 `peer0.org1.example.com` 加入到這個通道<br>
+      通道（Channel）是 Fabric 中的重要概念與設計，它是網路成員間通訊的私有的子網路；網路中會有多個通道同時存在；每個交易都在認證、授權後在某個通道裡執行；所有數據、交易、成員、通道信息都只對此通道的授權成員可見。<br><br><br>
+
+2. 生成並導入PeerAdmin Card：<br>
    
    ```bash
    ./createPeerAdminCard.sh #生成卡片
    ```
    這個腳本會生成一個卡片，它包含了 Fabric 網路的資訊以及管理員 PeerAdmin 與之連接所必須的資訊；即**管理員的身份證明**；生成後這個卡片會被導入到 Composer，你可以在 `~/ .composer/cards/PeerAdmin@hlfv1` 目錄下找到被導入的PeerAdmin 卡片內容。之後，Composer 會利用這個卡片建立起到 Fabric 網路的連接。<br><br>
-   你可以用 `composer card list` 來確認所有的卡片，理論上輸出應該會像這樣：<br><br>
+   - 你可以用 `composer card list` 來確認所有的卡片，理論上輸出應該會像這樣：<br><br>
 
-   ```bash
-   The following Business Network Cards are available:
+      ```bash
+      The following Business Network Cards are available:
    
-   Connection Profile: hlfv1
-   ┌─────────────────┬───────────┬──────────────────┐
-   │ Card Name       │ UserId    │ Business Network │
-   ├─────────────────┼───────────┼──────────────────┤
-   │ admin@test-bank │ admin     │ test-bank        │
-   ├─────────────────┼───────────┼──────────────────┤
-   │ PeerAdmin@hlfv1 │ PeerAdmin │                  │
-   └─────────────────┴───────────┴──────────────────┘
+      Connection Profile: hlfv1
+      ┌─────────────────┬───────────┬──────────────────┐
+      │ Card Name       │ UserId    │ Business Network │
+      ├─────────────────┼───────────┼──────────────────┤
+      │ admin@test-bank │ admin     │ test-bank        │
+      ├─────────────────┼───────────┼──────────────────┤
+      │ PeerAdmin@hlfv1 │ PeerAdmin │                  │
+      └─────────────────┴───────────┴──────────────────┘
 
    
-   Issue composer card list --card <Card Name> to get details a specific card
+      Issue composer card list --card <Card Name> to get details a specific card
 
-   Command succeeded
-   ```
+      Command succeeded
+      ```
 <br>
-<p align="center">🎉到這裡時你已經順利將區塊鏈啟動並獲取一張能在鏈上部署應用程式的通行證了！🎉</p><br><br>
+<p align="center">🎉<b>到這裡時你已經順利將區塊鏈啟動並獲取一張能在鏈上部署應用程式的通行證了！🎉</b></p><br><br>
 
 ## 部署第一個 Fabric 區塊鏈商業網路
 Fabric runtime 已經被成功安裝、啟動了，現在我們要部署第一個 Fabric 區塊鏈商業網路。
@@ -97,30 +93,33 @@ Fabric runtime 已經被成功安裝、啟動了，現在我們要部署第一�
    yo hyperledger-composer:businessnetwork
    ```
 
-   參數 `businessnetwork` 來自於之前安裝的generator-hyperledger-composer，表示了一組對應的模板文件。可以在 `~/.nvm/versions/node/v8.11.1/lib/node_modules/generator-hyperledger-composer/generators/businessnetwork/templates/` 下找到即將生成的內容的模板。<br>
-   它會提示輸入相關資料，可以按照下面來填入：<br>
-   <img src="https://cdn-media-1.freecodecamp.org/images/CF0D-XmKKlo4bmAyumr3l91W90T1o1SIHTko">
+   - 參數 `businessnetwork` 來自於之前安裝的generator-hyperledger-composer，表示了一組對應的模板文件。可以在 `~/.nvm/versions/node/v8.11.1/lib/node_modules/generator-hyperledger-composer/generators/businessnetwork/templates/` 下找到即將生成的內容的模板。<br>
+   它會提示輸入相關資料，可以按照下面來填入：
    <br>
+   <table><tr>
+   <td><img src="https://cdn-media-1.freecodecamp.org/images/CF0D-XmKKlo4bmAyumr3l91W90T1o1SIHTko"></td>
+   </tr></table>
+   <br>
+
    執行成功後，在當前 `~/fabric-tools/` 路徑下，會新增了一個資料夾叫 `test-bank`，裡面有 `index.js`、`package.json` 等檔案，以及 `lib`、`models` 兩個資料夾，這就是將要部署的區塊鏈商業網路定義。<br><br><br>
 2. 生成商業網路壓縮檔 .bna (**b**usiness **n**etwork **a**rchive)
-   進入 test-bank 資料夾<br><br>
+   1. 進入 test-bank 資料夾<br>
+      ```bash
+      cd ~/fabric-tools/tutorial-network
+      ```
+      後續的操作基本都在此目錄下完成。<br><br>
+   2. 生成商業網路壓縮檔 .bna<br>
+   
+      ```bash
+      composer archive create -t dir -n .
+      ```
 
-   ```bash
-   cd ~/fabric-tools/tutorial-network
-   ```
-   後續的操作基本都在此目錄下完成。<br>
-   生成商業網路壓縮檔 .bna
-
-   ```bash
-   composer archive create -t dir -n .
-   ```
-
-   執行成功後，在當前資料夾下會產生一個新導案 test-bank@0.0.1.bna，即是 test-bank 整個資料夾的壓縮檔。解壓縮後會發現含有主要的資料夾及檔案：`lib/`、`models/`、`package.json`、`permissions.acl`。我們會在以後詳細解釋、操作這些檔案。
+      執行成功後，在當前資料夾下會產生一個新導案 test-bank@0.0.1.bna，即是 test-bank 整個資料夾的壓縮檔。解壓縮後會發現含有主要的資料夾及檔案：`lib/`、`models/`、`package.json`、`permissions.acl`。我們會在以後詳細解釋、操作這些檔案。<br><br>
 
 ### 部署及啟動商業網路
 這是安裝部署的最後一部分內容了。
 
-1. 部署商業網路 test-bank<br><br>
+1. 部署商業網路 test-bank<br>
 
    ```bash
    composer network install --card PeerAdmin@hlfv1 --archiveFile test-bank@0.0.1.bna
@@ -131,11 +130,11 @@ Fabric runtime 已經被成功安裝、啟動了，現在我們要部署第一�
 
    `composer network install` 指令會部署指定的 .bna 檔案到 Fabric 網絡。.bna 檔包括了這個商業網路的 Assets 模型、交易事務邏輯、訪問控制規則等定義，但它並不能直接在 Fabric 上運行。.bna 文件是由 Composer 生成的，它是用 Composer 提供支持的一系列建模語言、規範定義的業務網絡定義，我們必須將它先安裝在 Fabric Peer 節點上。然後才可以在這個節點上啟動運行這個業務網絡。<br><br>
 
-   參數 `-c (--card)` 應指定為在上一步驟中生成PeerAdmin 卡片。<br>
+   - 參數 `-c (--card)` 應指定為在上一步驟中生成PeerAdmin 卡片。<br>
 
-   參數 `-a (--archiveFile)` 應指定為將要部署的業務網絡文件包。<br><br>
+   - 參數 `-a (--archiveFile)` 應指定為將要部署的業務網絡文件包。<br><br>
 
-2. 啟動業務網絡<br><br>
+2. 啟動業務網絡<br>
 
    ```bash
    composer network start --networkName test-bank \
@@ -175,7 +174,7 @@ Fabric runtime 已經被成功安裝、啟動了，現在我們要部署第一�
    </tr></table>
 <br>
 
-4. 確認tutorial-network 安裝成功<br><br>
+4. 確認tutorial-network 安裝成功<br>
 
    ```bash
    composer network ping --card admin@tutorial-network
@@ -195,12 +194,12 @@ Fabric runtime 已經被成功安裝、啟動了，現在我們要部署第一�
    ```
 <br>
 
-5. 啟動 REST Server<br><br>
+5. 啟動 REST Server<br>
 
    ```bash 
    composer-rest-server
    ```
-   並在之後提示的選項中輸入內容如下：<br><br>
+   並在之後提示的選項中輸入內容如下：<br>
 
    ```bash
    Card Name: admin@test-bank
