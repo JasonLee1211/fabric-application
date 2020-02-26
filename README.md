@@ -7,7 +7,7 @@
   <br>
 </h1>
 
-Using `Hyperledger Composer` to create an application on `Hyperledger Fabric` Blockchain
+Using `Hyperledger Composer` to create an application on `Hyperledger Fabric` Blockchain.
 
 <p align="center">
 <a href ="https://www.hyperledger.org/projects/fabric"><img src="https://img.shields.io/badge/hyperledger%20fabric-v1.2-brightgreen.svg"></a>
@@ -19,22 +19,14 @@ Using `Hyperledger Composer` to create an application on `Hyperledger Fabric` Bl
 </p>
 
 ## 成果圖
-<table><tr>
-<td><img src="./imgs/People.png"></td>
-</tr></table>
 
-<table><tr>
-<td><img src="./imgs/Account.png"></td>
-</tr></table>
-
-<table><tr>
-<td><img src="./imgs/TransactionUI.png"></td>
-</tr></table>
-
-<table><tr>
-<td><img src="./imgs/Result.png"></td>
-</tr></table>
-
-<table><tr>
-<td><img src="./imgs/BlockchainRecord.png"></td>
-</tr></table>
+1. 戶名
+   ![](./imgs/People.png)
+2. 帳號
+   ![](./imgs/Account.png)
+3. 轉帳操作介面
+   ![](./imgs/TransactionUI.png)
+4. 確認轉帳成功
+   ![](/imgs/Result.png)
+5. 區塊鏈上的紀錄<br>(包含哈希值和時間戳章)
+   ![](./imgs/BlockchainRecord.png)
