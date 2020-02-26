@@ -22,7 +22,7 @@
 ## 執行 
 **如果你的環境還沒有安裝好的話，可以參考[安裝步驟](install.md)。**<br>
 
-1. 你會利用一些腳本來控制你的 runtime，如果你是按照教學的步驟安裝的話。當你第一次執行 runtime 時，你會需要跑啟動腳本並產生出一張 PeerAdmin 的卡片。<br>
+1. <ins>如果你是按照教學的安裝步驟的話</ins>，你會利用一些腳本來控制你的 runtime。當你第一次執行 runtime 時，你會需要跑啟動腳本並產生出一張 PeerAdmin 的卡片。<br>
 
    ```bash
    cd ~/fabric-dev-servers
@@ -30,16 +30,18 @@
    ./startFabric.sh #啟動Fabric
    ```
    - 你可以利用 `./stopFabric.sh` 停止 runtime，或 `./startFabric.sh` 來重新啟動它。
-   - `startFabric.sh` 最終會執行 ~/fabric-tools/fabric-scripts/hlfv12/startFabric.sh，裡面有如下一行內容：
+   - `startFabric.sh` 最終會執行 `~/fabric-tools/fabric-scripts/hlfv12/startFabric.sh`，裡面有如下一行內容：
 
       ```bash
       ARCH=$ARCH docker-compose -f "${DOCKER_FILE}" up -d
       ```
-   - 打開 `~/fabric-tools/fabric-scripts/hlfv11/composer/docker-compose.yml` 我們可以看到有如下四個Docker 應用的配置：
-      * `ca.org1.example.com` (CA Node)
-      * `orderer.example.com` (Orderer Node)
-      * `peer0.org1.example.com` (Peer Node)
-      * `couchdb` (Database)
+   - 打開 `~/fabric-tools/fabric-scripts/hlfv11/composer/docker-compose.yml` 我們可以看到四個 Docker 容器：
+      * 區塊鏈節點
+         * `ca.org1.example.com` (CA Node)
+         * `orderer.example.com` (Orderer Node)
+         * `peer0.org1.example.com` (Peer Node)
+      * 資料庫
+         * `couchdb`
 
       它們啟動成功後就代表 Fabric 區塊鏈網路的核心部分已經處於運行的狀態了。<br><br>
    - 在 `startFabric.sh` 中，還有以下內容：<br>
@@ -83,7 +85,7 @@
 ## 部署第一個 Fabric 區塊鏈商業網路
 Fabric runtime 已經被成功安裝、啟動了，現在我們要部署第一個 Fabric 區塊鏈商業網路。
 ### 準備商業網路
-為使學習過程更容易，我們直接利用 Yeoman 及已經下載的Generator 生成區塊鏈商業網路框架。<br>
+為使學習過程更容易，我們直接利用 `Yeoman` 及 [`已經下載的 Generator`](install.md#第一步安裝命令工具) 生成區塊鏈商業網路框架。<br>
 
 在以後的章節中，我們會介紹如何按步驟手工完成定義、部署過程。<br>
 
@@ -93,11 +95,16 @@ Fabric runtime 已經被成功安裝、啟動了，現在我們要部署第一�
    yo hyperledger-composer:businessnetwork
    ```
 
-   - 參數 `businessnetwork` 來自於之前安裝的generator-hyperledger-composer，表示了一組對應的模板文件。可以在 `~/.nvm/versions/node/v8.11.1/lib/node_modules/generator-hyperledger-composer/generators/businessnetwork/templates/` 下找到即將生成的內容的模板。<br>
+   - 參數 `businessnetwork` 來自於之前安裝的generator-hyperledger-composer，表示了一組對應的範本檔案。可以在 `~/.nvm/versions/node/v8.11.1/lib/node_modules/generator-hyperledger-composer/generators/businessnetwork/templates/` 下找到即將生成的內容的範本。<br>
    它會提示輸入相關資料，可以按照下面來填入：
    <br>
    <table><tr>
-   <td><img src="https://cdn-media-1.freecodecamp.org/images/CF0D-XmKKlo4bmAyumr3l91W90T1o1SIHTko"></td>
+   <td>
+
+   ```diff
+   -need to change to terminalizer
+   ```
+   <img src="https://cdn-media-1.freecodecamp.org/images/CF0D-XmKKlo4bmAyumr3l91W90T1o1SIHTko"></td>
    </tr></table>
    <br>
 
@@ -125,16 +132,21 @@ Fabric runtime 已經被成功安裝、啟動了，現在我們要部署第一�
    composer network install --card PeerAdmin@hlfv1 --archiveFile test-bank@0.0.1.bna
    ```
    <table><tr>
-   <td><img src="https://cdn-media-1.freecodecamp.org/images/B3DUtkud4azEoCEoiIKV4PupBCxIPY4XOjLn"></td>
+   <td>
+
+   ```diff
+   -need to change to terminalizer
+   ```
+   <img src="https://cdn-media-1.freecodecamp.org/images/B3DUtkud4azEoCEoiIKV4PupBCxIPY4XOjLn"></td>
    </tr></table>
 
-   `composer network install` 指令會部署指定的 .bna 檔案到 Fabric 網絡。.bna 檔包括了這個商業網路的 Assets 模型、交易事務邏輯、訪問控制規則等定義，但它並不能直接在 Fabric 上運行。.bna 文件是由 Composer 生成的，它是用 Composer 提供支持的一系列建模語言、規範定義的業務網絡定義，我們必須將它先安裝在 Fabric Peer 節點上。然後才可以在這個節點上啟動運行這個業務網絡。<br><br>
+   `composer network install` 指令會部署指定的 .bna 檔案到 Fabric 網路。.bna 檔包括了這個商業網路的 Assets 模型、交易事務邏輯、訪問控制規則等定義，但它並不能直接在 Fabric 上運行。.bna 檔是由 Composer 生成的，它是用 Composer 提供支持的一系列建模語言、規範定義商業網路定義，我們必須將它先安裝在 Fabric Peer 節點上。然後才可以在這個節點上啟動運行這個商業網路。<br><br>
 
    - 參數 `-c (--card)` 應指定為在上一步驟中生成PeerAdmin 卡片。<br>
 
-   - 參數 `-a (--archiveFile)` 應指定為將要部署的業務網絡文件包。<br><br>
+   - 參數 `-a (--archiveFile)` 應指定為將要部署的商業網路檔。<br><br>
 
-2. 啟動業務網絡<br>
+2. 啟動商業網路<br>
 
    ```bash
    composer network start --networkName test-bank \
@@ -145,7 +157,12 @@ Fabric runtime 已經被成功安裝、啟動了，現在我們要部署第一�
                           --file networkadmin.card
    ```
    <table><tr>
-   <td><img src="https://cdn-media-1.freecodecamp.org/images/LSkNP7nxN4tUcY3Dy01M22S6CivgkYLUJL4T"></td>
+   <td>
+
+   ```diff
+   -need to change to terminalizer
+   ```
+   <img src="https://cdn-media-1.freecodecamp.org/images/LSkNP7nxN4tUcY3Dy01M22S6CivgkYLUJL4T"></td>
    </tr></table>
 
    <br>`composer network start` 用指定的卡片啟動這個網路；同時會生成一個當前商業網路的管理員卡片，即此範例中的 `networkadmin.card`。
@@ -170,7 +187,12 @@ Fabric runtime 已經被成功安裝、啟動了，現在我們要部署第一�
    composer card import --file networkadmin.card
    ```
    <table><tr>
-   <td><img src="https://cdn-media-1.freecodecamp.org/images/keh-Fx-k7zKaN11RaG6LPsedpFTmpfyAF6cC"></td>
+   <td>
+
+   ```diff
+   -need to change to terminalizer
+   ```
+   <img src="https://cdn-media-1.freecodecamp.org/images/keh-Fx-k7zKaN11RaG6LPsedpFTmpfyAF6cC"></td>
    </tr></table>
 <br>
 
@@ -180,7 +202,12 @@ Fabric runtime 已經被成功安裝、啟動了，現在我們要部署第一�
    composer network ping --card admin@tutorial-network
    ```
    <table><tr>
-   <td><img src="https://cdn-media-1.freecodecamp.org/images/VnU45AuKe6eCuQ82kr9AqTIJqNaeDMZJ-OKM"></td>
+   <td>
+
+   ```diff
+   -need to change to terminalizer
+   ```
+   <img src="https://cdn-media-1.freecodecamp.org/images/VnU45AuKe6eCuQ82kr9AqTIJqNaeDMZJ-OKM"></td>
    </tr></table>
    如果部署成功，會顯示類似如下內容：
 
@@ -209,29 +236,49 @@ Fabric runtime 已經被成功安裝、啟動了，現在我們要部署第一�
    Enable TSL (default): No
    ```
    <table><tr>
-   <td><img src="https://cdn-media-1.freecodecamp.org/images/0hTic2-uVL1dhxlNfTYlfo9lBdW3lbDr4HEJ"></td>
+   <td>
+
+   ```diff
+   -need to change to terminalizer
+   ```
+   <img src="https://cdn-media-1.freecodecamp.org/images/0hTic2-uVL1dhxlNfTYlfo9lBdW3lbDr4HEJ"></td>
    </tr></table>
    
    `composer-rest-server` 會根據部署的商業網路生成一系列REST API，以方便用戶通過瀏覽器或其他類似 curl 的應用程式訪問這個區塊鏈商業網路。<br><br>
-   以瀏覽器開啟這個連結：<ins>http://localhost:3000/explorer</ins><br><br>
+   在瀏覽器中輸入：<ins>http://fabric11dev1:3000/explorer</ins>。<br>
+   - **`fabric11dev1` 是當前部署運行 Composer REST Server 的機器名。如果從本機訪問，可以使用 `http://fabric11dev1:3000/explorer`，或者直接使用 IP 地址 `http://127.0.0.1:3000/explorer` 訪問。後文不再對此特別說明。**
+   <br><br>
    你就會看到你美麗的區塊鏈 API~<br>
    
    <table><tr>
-   <td><img src="https://cdn-media-1.freecodecamp.org/images/rUfk5ZJuROhQ5ipcqDPXAQ-5LLtIRxYQvyQk"></td>
+   <td>
+
+   ```diff
+   -need to change to terminalizer
+   ```
+   <img src="https://cdn-media-1.freecodecamp.org/images/rUfk5ZJuROhQ5ipcqDPXAQ-5LLtIRxYQvyQk"></td>
    </tr></table>
-
-<p align="center">
-
-## 部署成功 :tada:
-</p>
+<br><br>
 
 ## 訪問區塊鏈網路
 現在我們可以開始訪問部署成功的第一個 Fabric 區塊鏈商業網路。<br>
 本文主要介紹通過瀏覽器和 curl 命令訪問 REST Service。
 
-1. 通過瀏覽器訪問REST Service
-   在瀏覽器中輸入：<ins>http://fabric11dev1:3000/explorer</ins>。
-   `fabric11dev1` 是當前部署運行 Composer REST Server的機器名。如果從本機訪問，可以使用 localhost，或者直接使用 IP 地址 (127.0.0.1) 訪問。後文不再對此特別說明。
+- ~~test_Customer 是這個區塊鏈業務網絡中定義的資產模型(Asset)。表示一種有形或無形的可改變、轉移的商品。
+test_Account 是這個業務網絡的成員(Participant)，可以擁有Asset，提交Transaction。
+test_AccountTransfer 是一種交易或事務(Transaction)，由成員提交到業務網絡，用以改變、轉移商品，或觸發其他操作。
+這些內容都可點擊展開，顯示REST API 中對於此項內容的所有操作。~~
+   <table><tr>
+   <td>
+
+   ```diff
+   -need to change to terminalizer
+   ```
+   <img src="https://cdn-media-1.freecodecamp.org/images/rUfk5ZJuROhQ5ipcqDPXAQ-5LLtIRxYQvyQk"></td>
+   </tr></table>
+- ~~Instructions for GET, POST~~
 ## Reference
-官方說明：https://hyperledger.github.io/composer/latest/introduction/introduction.html<br>
-Hyperledger Composer Github：https://hyperledger.github.io/composer/latest/introduction/introduction.html<br>
+- IBM Hyperledger Fabric 學習筆記：https://www.ibm.com/developerworks/cn/cloud/library/cl-lo-hyperledger-fabric-study-notes1/index.html
+   * 文字敘述多半轉發自這篇
+- 官方說明：https://hyperledger.github.io/composer/latest/introduction/introduction.html<br>
+- Hyperledger Composer Github：https://hyperledger.github.io/composer/latest/introduction/introduction.html<br>
