@@ -1,0 +1,199 @@
+================================================================================
+==== Node Report ===============================================================
+
+Event: exception, location: "OnUncaughtException"
+Filename: node-report.20200227.025542.16342.001.txt
+Dump event time:  2020/02/27 02:55:42
+Module load time: 2020/02/27 02:55:41
+Process ID: 16342
+Command line: node /home/jason/.nvm/versions/node/v8.11.4/bin/composer archive list -a test-bank@0.0.1.bna 
+
+Node.js version: v8.11.4
+(http_parser: 2.8.0, v8: 6.2.414.54, uv: 1.19.1, zlib: 1.2.11, ares: 1.10.1-DEV,
+ modules: 57, nghttp2: 1.32.0, napi: 3, openssl: 1.0.2p, icu: 60.1, unicode: 10.0,
+ cldr: 32.0, tz: 2017c)
+
+node-report version: 2.2.1 (built against Node.js v8.11.4, glibc 2.27, 64 bit)
+
+OS version: Linux 4.15.0-88-generic #88-Ubuntu SMP Tue Feb 11 20:11:34 UTC 2020
+(glibc: 2.27)
+
+Machine: jason-VirtualBox x86_64
+
+================================================================================
+==== JavaScript Stack Trace ====================================================
+
+Object.parseArgs [as _parseArgs] (/home/jason/.nvm/versions/node/v8.11.4/lib/node_modules/composer-cli/node_modules/yargs/yargs.js:1:1)
+Object.get [as argv] (/home/jason/.nvm/versions/node/v8.11.4/lib/node_modules/composer-cli/node_modules/yargs/yargs.js:1:1)
+Object.<anonymous> (/home/jason/.nvm/versions/node/v8.11.4/lib/node_modules/composer-cli/cli.js:1:1)
+Module._compile (module.js:1:1)
+Object.Module._extensions..js (module.js:1:1)
+Module.load (module.js:1:1)
+tryModuleLoad (module.js:1:1)
+Function.Module._load (module.js:1:1)
+Function.Module.runMain (module.js:1:1)
+startup (bootstrap_node.js:1:1)
+bootstrap_node.js:1:1
+
+================================================================================
+==== Native Stack Trace ========================================================
+
+ 0: [pc=0x7fde5b8a309b] nodereport::OnUncaughtException(v8::Isolate*) [/home/jason/.nvm/versions/node/v8.11.4/lib/node_modules/composer-cli/node_modules/node-report/api.node]
+ 1: [pc=0xe78d22] v8::internal::Isolate::Throw(v8::internal::Object*, v8::internal::MessageLocation*) [node]
+ 2: [pc=0xff146d] v8::internal::Runtime_Throw(int, v8::internal::Object**, v8::internal::Isolate*) [node]
+ 3: [pc=0x3b47579042fd] 
+
+================================================================================
+==== JavaScript Heap and Garbage Collector =====================================
+
+Heap space name: new_space
+    Memory size: 33,554,432 bytes, committed memory: 15,458,112 bytes
+    Capacity: 16,498,688 bytes, used: 3,369,472 bytes, available: 13,129,216 bytes
+Heap space name: old_space
+    Memory size: 18,149,376 bytes, committed memory: 17,879,008 bytes
+    Capacity: 15,660,600 bytes, used: 15,654,376 bytes, available: 6,224 bytes
+Heap space name: code_space
+    Memory size: 2,097,152 bytes, committed memory: 1,390,208 bytes
+    Capacity: 1,619,904 bytes, used: 1,315,520 bytes, available: 304,384 bytes
+Heap space name: map_space
+    Memory size: 1,593,344 bytes, committed memory: 1,228,184 bytes
+    Capacity: 1,436,832 bytes, used: 919,072 bytes, available: 517,760 bytes
+Heap space name: large_object_space
+    Memory size: 1,732,608 bytes, committed memory: 1,732,608 bytes
+    Capacity: 1,444,026,824 bytes, used: 1,698,760 bytes, available: 1,442,328,064 bytes
+
+Total heap memory size: 57,126,912 bytes
+Total heap committed memory: 37,688,120 bytes
+Total used heap memory: 22,957,200 bytes
+Total available heap memory: 1,456,285,648 bytes
+
+Heap memory limit: 1,501,560,832
+
+================================================================================
+==== Resource Usage ============================================================
+
+Process total resource usage:
+  User mode CPU: 1.558852 secs
+  Kernel mode CPU: 0.146142 secs
+  Average CPU Consumption : 170.499%
+  Maximum resident set size: 69,693,440 bytes
+  Page faults: 0 (I/O required) 16335 (no I/O required)
+  Filesystem activity: 0 reads 16 writes
+
+Event loop thread resource usage:
+  User mode CPU: 1.458571 secs
+  Kernel mode CPU: 0.120543 secs
+  Average CPU Consumption : 157.911%
+  Filesystem activity: 0 reads 16 writes
+
+================================================================================
+==== Node.js libuv Handle Summary ==============================================
+
+(Flags: R=Ref, A=Active)
+Flags  Type      Address             Details
+[-A]   async     0x00000000023c5600  
+[-A]   check     0x00007ffcbc7c31d0  
+[RA]   idle      0x00007ffcbc7c3248  
+[--]   prepare   0x00007ffcbc7c32c0  
+[--]   check     0x00007ffcbc7c3338  
+[-A]   async     0x0000000002166900  
+[R-]   timer     0x0000000002444e60  repeat: 0, timeout expired: 20336526 ms ago
+[R-]   tty       0x000000000241d318  width: 80, height: 24, file descriptor: 9, write queue size: 0, writable
+[-A]   signal    0x00000000024355b0  signum: 28 (SIGWINCH)
+[R-]   tty       0x0000000002444508  width: 80, height: 24, file descriptor: 11, write queue size: 0, writable
+[-A]   async     0x00007fde5baabce0  
+
+================================================================================
+==== System Information ========================================================
+
+Environment variables
+  XDG_CONFIG_DIRS=/etc/xdg/xdg-ubuntu:/etc/xdg
+  LANG=zh_TW.UTF-8
+  DISPLAY=:0
+  SHLVL=1
+  LOGNAME=jason
+  LANGUAGE=zh_TW:zh
+  MANDATORY_PATH=/usr/share/gconf/ubuntu.mandatory.path
+  XDG_VTNR=2
+  XAUTHORITY=/run/user/1000/gdm/Xauthority
+  PWD=/home/jason/project/tutorial-network
+  QT_QPA_PLATFORMTHEME=appmenu-qt5
+  GTK_IM_MODULE=ibus
+  COLORTERM=truecolor
+  XDG_SESSION_ID=2
+  GTK2_MODULES=overlay-scrollbar
+  GNOME_TERMINAL_SCREEN=/org/gnome/Terminal/screen/b24eea05_3289_4ec7_8418_a7b248b8b587
+  DESKTOP_SESSION=ubuntu
+  XDG_SESSION_DESKTOP=ubuntu
+  GDMSESSION=ubuntu
+  TEXTDOMAINDIR=/usr/share/locale/
+  DEFAULTS_PATH=/usr/share/gconf/ubuntu.default.path
+  GNOME_DESKTOP_SESSION_ID=this-is-deprecated
+  WINDOWPATH=2
+  TEXTDOMAIN=im-config
+  USERNAME=jason
+  IM_CONFIG_PHASE=2
+  DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
+  VTE_VERSION=5202
+  XDG_DATA_DIRS=/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop
+  GNOME_TERMINAL_SERVICE=:1.73
+  QT4_IM_MODULE=xim
+  CLUTTER_IM_MODULE=xim
+  GJS_DEBUG_TOPICS=JS ERROR;JS LOG
+  XDG_MENU_PREFIX=gnome-
+  GNOME_SHELL_SESSION_MODE=ubuntu
+  SHELL=/usr/bin/zsh
+  QT_IM_MODULE=ibus
+  XDG_SESSION_TYPE=x11
+  GJS_DEBUG_OUTPUT=stderr
+  TERM=xterm-256color
+  SSH_AGENT_PID=3306
+  GTK_MODULES=gail:atk-bridge
+  XDG_CURRENT_DESKTOP=ubuntu:GNOME
+  PATH=/home/jason/.nvm/versions/node/v8.11.4/bin:/home/jason/bin:/home/jason/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+  SSH_AUTH_SOCK=/run/user/1000/keyring/ssh
+  HOME=/home/jason
+  XDG_SEAT=seat0
+  XMODIFIERS=@im=ibus
+  XDG_RUNTIME_DIR=/run/user/1000
+  SESSION_MANAGER=local/jason-VirtualBox:@/tmp/.ICE-unix/3188,unix/jason-VirtualBox:/tmp/.ICE-unix/3188
+  GPG_AGENT_INFO=/run/user/1000/gnupg/S.gpg-agent:0:1
+  USER=jason
+  QT_ACCESSIBILITY=1
+  OLDPWD=/home/jason
+  ZSH=/home/jason/.oh-my-zsh
+  PAGER=less
+  LESS=-R
+  LSCOLORS=Gxfxcxdxbxegedabagacad
+  LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:
+  NVM_DIR=/home/jason/.nvm
+  NVM_CD_FLAGS=-q
+  NVM_BIN=/home/jason/.nvm/versions/node/v8.11.4/bin
+  _=/home/jason/.nvm/versions/node/v8.11.4/bin/composer
+  SUPPRESS_NO_CONFIG_WARNING=y
+
+Resource limits                        soft limit      hard limit
+  core file size (blocks)                       0       unlimited
+  data seg size (kbytes)                unlimited       unlimited
+  file size (blocks)                    unlimited       unlimited
+  max locked memory (bytes)              16777216        16777216
+  max memory size (kbytes)              unlimited       unlimited
+  open files                                 4096            4096
+  stack size (bytes)                      8388608       unlimited
+  cpu time (seconds)                    unlimited       unlimited
+  max user processes                        31731           31731
+  virtual memory (kbytes)               unlimited       unlimited
+
+Loaded libraries
+  linux-vdso.so.1
+  /lib/x86_64-linux-gnu/libdl.so.2
+  /lib/x86_64-linux-gnu/librt.so.1
+  /usr/lib/x86_64-linux-gnu/libstdc++.so.6
+  /lib/x86_64-linux-gnu/libm.so.6
+  /lib/x86_64-linux-gnu/libgcc_s.so.1
+  /lib/x86_64-linux-gnu/libpthread.so.0
+  /lib/x86_64-linux-gnu/libc.so.6
+  /lib64/ld-linux-x86-64.so.2
+  /home/jason/.nvm/versions/node/v8.11.4/lib/node_modules/composer-cli/node_modules/node-report/api.node
+
+================================================================================
